@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery 실습</title>
+</head>
+<body>
+  <label>
+    <input type="checkbox" value="선택1"> 선택1
+  </label>
+  <label>
+    <input type="checkbox" value="선택2"> 선택2
+  </label>
+  <label>
+    <input type="checkbox" value="선택3"> 선택3
+  </label>
+  <p id=result></p>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  // 체크박스를 클릭했을때
+  $("input[type='checkbox']").on('click', function() {
+      let Values = [];
+
+    // 반복을 통해 체크된항목을 찾아내고
+    $("input[type='checkbox']:checked").each(function() {
+      // value값을 저장한다
+      Values.push($(this).val());
+    });
+
+    $("#result").text(Values);
+  });
+});
+
+// const $checkboxes = $("input[type='checkbox']");
+//   const $result = $("#result");
+
+//   $checkboxes.on("click", (e) =>{
+//     if(e.target.checked){
+//       $result.append(`<span>${e.target.value}</span>`)
+
+//     }else{
+//       const $spans = $("#result span");
+//       const $target = $spans.filter((i, span) => span.innerText === e.target.value).eq(0);
+//       $target.remove()
+//     }
+//   });
+
+</script>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>갤러리</title>
+  <style>
+    header {
+      text-align: center;
+    }
+    .gallery-item {
+      display: inline-block;
+      margin: 10px;
+      text-align: center;
+    }
+    .pagination {
+      text-align: center;
+    }
+    .pagination a {
+      display: inline-block;
+      margin: 5px;
+      text-decoration: none;
+      color: #000;
+      padding: 5px 10px;
+      border: 1px round #ccc;
+    }
+    .pagination a.active {
+      background-color: #ccc;
+    }
+    .gallery {
+      display: flex;
+      
+      
+    }
+    main {
+      overflow: overlay;
+      padding-bottom: 3%;
+      height: 300px;
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1><strong>갤러리</strong></h1>
+  </header>
+  <main>
+    <div id="gallery" class="gallery"></div>
+    
+  </main>
+
+  <footer>
+    <!-- 페이지네이션 호출 -->
+    <div id="pagination" class="pagination"></div>
+  </footer>
+  <script>
+    const itemsPerPage = 10; // 한 페이지에 출력할 사진 개수
+    const maxPageNumbers = 5; // 한 번에 보여줄 페이지 번호 개수
+    let currentPage = 1; // 현재 페이지
+// 패치 호출
+    fetch("https://jsonplaceholder.typicode.com/photos")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`response: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((photos) => {
+        if (!photos || photos.length == 0) {
+          throw new Error("none result");
+        }
+        return photos.reverse().map((photo, i) => {
+          return { thumbnailUrl: photo.thumbnailUrl, title: photo.title };
+        });
+      })
+      .then((data) => {
+        const galleryElement = document.getElementById("gallery");
+        const paginationElement = document.getElementById("pagination");
+        let totalItems = data.length; // 총 사진 개수
+        let totalPages = Math.ceil(totalItems / itemsPerPage); // 총 페이지 수
+
+        function displayPage(pageNumber) {
+          galleryElement.innerHTML = ""; // 이전에 표시된 갤러리 내용을 지웁니다.
+          currentPage = pageNumber; // 현재 페이지를 업데이트합니다.
+
+          const startIndex = (pageNumber - 1) * itemsPerPage;
+          const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+          for (let i = startIndex; i < endIndex; i++) {
+            const item = data[i];
+            const galleryItem = document.createElement("div");
+            const thumbnailImg = document.createElement("img");
+            const galleryTitle = document.createElement("p");
+
+            thumbnailImg.src = item.thumbnailUrl;
+            
+            galleryTitle.textContent = item.title;
+
+            galleryItem.classList.add("gallery-item");
+            galleryItem.appendChild(thumbnailImg);
+            galleryItem.appendChild(galleryTitle);
+            galleryElement.appendChild(galleryItem);
+          }
+
+          createPagination(); // 페이지네이션을 갱신합니다.
+        }
+
+        function createPagination() {
+          paginationElement.innerHTML = ""; // 이전에 표시된 페이지네이션을 지웁니다.
+
+          let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
+          let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
+
+          if (endPage - startPage + 1 < maxPageNumbers) {
+            startPage = Math.max(1, endPage - maxPageNumbers + 1);
+          }
+
+          const firstPageLink = document.createElement("a");
+          firstPageLink.textContent = "<<";
+          firstPageLink.href = "#";
+          firstPageLink.addEventListener("click", () => displayPage(1));
+          paginationElement.appendChild(firstPageLink);
+
+          for (let i = startPage; i <= endPage; i++) {
+            const pageLink = document.createElement("a");
+            pageLink.textContent = i;
+            pageLink.href = "#";
+            pageLink.addEventListener("click", () => displayPage(i));
+            paginationElement.appendChild(pageLink);
+
+            if (i === currentPage) {
+              pageLink.classList.add("active");
+            }
+          }
+
+          const lastPageLink = document.createElement("a");
+          lastPageLink.textContent = ">>";
+          lastPageLink.href = "#";
+          lastPageLink.addEventListener("click", () => displayPage(totalPages));
+          paginationElement.appendChild(lastPageLink);
+        }
+
+        displayPage(currentPage); // 초기 페이지를 1로 설정하여 첫 페이지를 표시합니다.
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery 실습</title>
+</head>
+<body>
+  <form action="">
+    <label>
+      <input name="password" type="password" placeholder="비밀번호를 입력하세요.">
+    </label>
+    <div class="mark">
+      <a href="javascript:void(0)">비밀번호 표시</a>
+    </div>
+  </form>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+  // 비밀번호 표시를 통해 비밀번호를 보이게 하기
+  
+  $(".mark").on("click", (e) => {
+    const $input = $("input[name='password']");
+    if ($input.attr("type") === 'text') {
+      $(e.target).css("backgroundImage", "url('./close.jpg')");
+      $input.attr("type", 'password');
+    } else {
+      $(e.target).css("backgroundImage", "url('./open.jpg')");
+      $input.attr("type", 'text');
+    }
+  });
+
+  // 비밀번호 표시를 클릭하면 비밀번호 숨기기로 변경하기
+  $(".mark").on("click", (e) => {
+    if ($(e.target).text() === '비밀번호 표시') {$(e.target).text("비밀번호 숨기기")
+  }
+  else{$(e.target).text("비밀번호 표시")}
+}
+  );
+
+
+
+
+
+</script>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery 실습</title>
+</head>
+<body>
+  <form action="">
+    <label>
+      <input name="password" type="password" placeholder="비밀번호를 입력하세요." autocomplete="none">
+    </label>
+    <div class="mark">
+      <a href="1">비밀번호 표시</a>
+    </div>
+  </form>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+  // 비밀번호 표시를 통해 비밀번호를 보이게 하기
+  // 비밀번호 표시를 클릭하면 비밀번호 숨기기로 변경하기
+  const $input = $("input[name='password']")
+  $("a").on("click", (e) => {
+    // 원래 이벤트 막기!
+    e.preventDefault();
+    $input.attr("type", $input.attr('type') === 'password' ? 'text' : 'password');
+    e.target.innerText = $input.attr('type') === 'password' ? '비밀번호 표시' : '비밀번호 숨기기';
+  });
+</script>
+</html> -->

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슬라이드 배너</title>
+    <link rel="stylesheet" href="kurlybanner.css">
+</head>
+<body>
+<section class="container">
+  <!-- 메인 배너 -->
+  <div class="banner">
+    <div><img src="my_banner/banner1.jpeg"></div>
+    <div><img src="my_banner/banner2.jpeg"></div>
+    <div><img src="my_banner/banner3.jpeg"></div>
+    <div><img src="my_banner/banner4.jpeg"></div>
+    <div><img src="my_banner/banner5.jpeg"></div>
+    <div><img src="my_banner/banner6.jpeg"></div>
+    <div><img src="my_banner/banner7.jpeg"></div>
+    <div><img src="my_banner/banner8.jpeg"></div>
+    <div><img src="my_banner/banner9.jpeg"></div>
+    <div><img src="my_banner/banner10.jpeg"></div>
+    <div><img src="my_banner/banner11.jpeg"></div>
+    <div><img src="my_banner/banner12.jpeg"></div>
+  </div>
+</section>
+<div type="button" class="arrow left prev" class="left-button"></div>
+<div type="button" class="arrow right next" class="right-button"></div>
+
+<div id="index" class="e1dkubq60 css-f3tjpn efnzk70">1 / 12</div>
+
+<input type="image" class="easteregg" src="aasang.jpeg">
+</body>
+<script>
+  const index = document.getElementById("index")
+  function autoSlide() {
+    // 이동되는 데 걸리는 시간은 0.5초
+    banner.style.transition = "transform 0.5s";
+    count++;
+    if (count == 12) {
+     
+      banner.style.transform = "translate(-1900px)";
+      setTimeout(function () {
+        banner.style.transition = "transform 0s";
+        banner.style.transform = "translate(0px)";
+      }, 500);
+      count = 1;
+
+    } else {
+
+      banner.style.transform = "translate(-" + 1900 * count + "px)";
+    }
+    temp = buttons[count];
+    index.innerHTML = `${count} / 12`
+  }
+
+  const banner = document.querySelector("div.banner");
+  const buttons = document.querySelectorAll("div.banner div");
+  var count = 1, temp = buttons[count];
+  let firstDiv = document.createElement("div");
+  let lastDiv = document.createElement("div");
+
+  firstDiv.innerHTML = `<img src="my_banner/banner1.jpeg">`;
+  banner.appendChild(firstDiv);
+
+  lastDiv.innerHTML = `<img src="my_banner/banner12.jpeg">`;
+  banner.insertBefore(lastDiv, document.querySelector("div.banner div"));
+
+
+  banner.style.transform = "translate(-1900px)";
+
+  var inter = setInterval(autoSlide, 4000);
+
+  const arrows = document.querySelectorAll(".arrow");
+    var arrowButtonCheck = true;
+    arrows.forEach(arrow => {
+        arrow.addEventListener("click", function(){
+            if(arrowButtonCheck){
+                arrowButtonCheck = false;
+                clearInterval(inter);
+                banner.style.transition = "transform 0.5s"
+                let arrowType = arrow.classList[2];
+                
+                if(arrowType == 'prev'){
+                    count--;
+                    
+                    if(count == -1){
+                        banner.style.transform = "translate(0px)";
+                        setTimeout(function(){
+                            banner.style.transition = "transform 0s"
+                            banner.style.transform = "translate(-22800px)";
+                           
+                        }, 500);
+                        count = 11;
+                       
+                    }else{
+                        banner.style.transform = "translate(-" + 1900 * (count + 1) + "px)";
+                         } index.innerHTML = `${count + 1} / 12`
+                }else{
+                    count++;
+                    if(count == 12) {
+                        banner.style.transform = "translate(-" + 1900 * (count + 1) + "px)";
+                        setTimeout(function(){
+                            banner.style.transition = "transform 0s"
+                            banner.style.transform = "translate(-1900px)";
+                        }, 500);
+                        count = 0;
+                    }else{
+                        banner.style.transform = "translate(-" + 1900 * (count + 1) + "px)";
+                    }
+                    index.innerHTML = `${count + 1} / 12`
+                }
+
+
+                
+                inter = setInterval(autoSlide, 4000);
+                setTimeout(function(){
+                    arrowButtonCheck = true;
+                }, 500);
+            }
+        });
+    });
+
+    const left = document.querySelector(".left");
+    banner.addEventListener("mouseover", function(){
+      left.style.opacity = "1";
+    left.addEventListener("mouseover", function(){
+      left.style.opacity = "1";
+    });
+    banner.addEventListener("mouseout", function(){
+      left.style.opacity = "0";
+    });
+});
+    const right = document.querySelector(".right");
+    banner.addEventListener("mouseover", function(){
+      right.style.opacity = "1";
+    right.addEventListener("mouseover", function(){
+      right.style.opacity = "1";});
+    banner.addEventListener("mouseout", function(){
+      right.style.opacity = "0";
+    })
+
+});
+const easteregg = document.querySelector(".easteregg");
+easteregg.addEventListener("mouseover", function(){
+  easteregg.style.opacity = 1;});
+easteregg.addEventListener("mouseout", function(){
+  easteregg.style.opacity = 0;});
+
+
+</script>
+
+</html>

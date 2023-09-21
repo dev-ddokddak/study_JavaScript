@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>document.write()</title>
+</head>
+<body>
+  <!-- 
+    document.write() 실습
+    ------------------------------(hr 태그)
+
+    나의 이름은 000이고,
+    나이는 00살, 만 00살입니다.
+
+   -->
+</body>
+
+<script>
+
+  // 내가 생각한 방법
+  with(document){
+  write("document.write() 실습")
+  write("<hr>")
+  write("<br>")
+  write("나의 이름은 조현상이고,")
+  write("<br>")
+  write("나이는 30살, 만 ") 
+  write(minus())
+  write(" 살입니다.")
+  }
+
+  function minus(){
+    return 30-2
+  }
+
+</script>
+</html>
